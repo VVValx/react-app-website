@@ -5,7 +5,7 @@ import Input from "./Input";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
 
-function Form({login}) {
+function Form({login, auth}) {
   const [data, setData] = useState({
     username: "",
     password: ""
@@ -83,6 +83,7 @@ function Form({login}) {
   };
 
   const renderFormHeader = title => {
+    if(auth) title = "done"
     return <FormHeader title={title} />;
   };
 
