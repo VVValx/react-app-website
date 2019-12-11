@@ -21,7 +21,7 @@ function Form({login, auth}) {
     password: Joi.string().required()
   };
 
-  const login = { username: "valentine", password: "pass" };
+  const details = { username: "valentine", password: "pass" };
 
   const validateInput = ({ name, value }) => {
     const obj = { [name]: value };
@@ -60,7 +60,7 @@ function Form({login, auth}) {
 
   const callSubmit = () => {
     const newData = { ...data };
-    const newLogin = { ...login };
+    const newLogin = { ...details };
     if (
       newData.username === newLogin.username &&
       newData.password === newLogin.password
