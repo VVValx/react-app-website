@@ -4,7 +4,7 @@ import AuthContext from "../../contexts/AuthContext";
 function Login() {
   return (
     <AuthContext.Consumer>
-      {({ auth, setAuth }) => <Form login={setAuth} />}
+      {({ auth, setAuth }) => <Form login={setAuth} auth={auth}/>}
     </AuthContext.Consumer>
   );
 }
