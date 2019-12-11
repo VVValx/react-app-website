@@ -5,7 +5,7 @@ import Input from "./Input";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
 
-function Form() {
+function Form({login}) {
   const [data, setData] = useState({
     username: "",
     password: ""
@@ -65,7 +65,7 @@ function Form() {
       newData.username === newLogin.username &&
       newData.password === newLogin.password
     ) {
-      setAuth(true);
+      login();
     } else {
       return toast.error("Incorrect username or password");
     }
