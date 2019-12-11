@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import AuthContext from "./contexts/AuthContext";
+import Home from "./components/home/Home";
+import TopMenu from "./components/TopMenu";
+import About from "./components/about/About";
+import Login from "./components/login/Login";
+import Register from "./components/register/Register";
+import NotFound from "./components/NotFound";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 function App() {
+  const [auth, updateAuth] = useState(false);
+
+  const setAuth = a => {
+    updateAuth(a);
+  };
+
+  const state = { auth: auth, setAuth: setAuth };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TopMenu />
+      <ToastContainer />
+      <Switch>
+        <AuthContext.Provider value={state}>
+          <Route path="/login" exact component={Login} />
+          <Route path="/register" exact component={Register} />
+          <Route path="/about" exact component={About} />
+          <Route path="/" exact component={Home} />
+        </AuthContext.Provider>
+        <Route path="/not-found" component={NotFound} />
+        <Redirect to="/not-found" />
+      </Switch>
     </div>
   );
 }
