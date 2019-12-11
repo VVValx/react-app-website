@@ -5,7 +5,11 @@ import Input from "./Input";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
 
+<<<<<<< HEAD
 function Form({ login, view }) {
+=======
+function Form({login, view}) {
+>>>>>>> 83e7adb79b785769af3272dbb5189761a132a033
   const [data, setData] = useState({
     username: "",
     password: ""
@@ -96,6 +100,7 @@ function Form({ login, view }) {
       />
     );
   };
+<<<<<<< HEAD
 
   const renderForm = () => {
     if (view === "login") {
@@ -113,5 +118,30 @@ function Form({ login, view }) {
   };
 
   return renderForm();
+=======
+  
+  
+  const renderForm = ()=>{
+    if(view === "login"){
+      return (
+      <form onSubmit={onSubmit}>
+      <div className="form-container">
+        {renderFormHeader("Login")}
+        {renderInput("username")}
+        {renderInput("password", "password")}
+        {renderButton("Login", validateForm())}
+      </div>
+    </form>
+  )
+    }
+    
+  }
+
+  return (
+    renderForm()
+  );
+>>>>>>> 83e7adb79b785769af3272dbb5189761a132a033
 }
+
+
 export default Form;
