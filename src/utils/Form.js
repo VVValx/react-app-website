@@ -56,6 +56,7 @@ function Form() {
 
     return errors;
   };
+ 
 
   const callSubmit = () => {
     const newData = { ...data };
@@ -64,7 +65,7 @@ function Form() {
       newData.username === newLogin.username &&
       newData.password === newLogin.password
     ) {
-      console.log("Correct");
+      setAuth(true);
     } else {
       return toast.error("Incorrect username or password");
     }
