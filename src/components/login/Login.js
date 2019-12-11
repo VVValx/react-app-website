@@ -4,7 +4,7 @@ import AuthContext from "../../contexts/AuthContext";
 function Login() {
   return (
     <AuthContext.Consumer>
-      {({ auth, setAuth }) => <Form callSubmit={setAuth} />}
+      {({ auth, setAuth }) => <Form login={setAuth} />}
     </AuthContext.Consumer>
   );
 }
