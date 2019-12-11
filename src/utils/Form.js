@@ -65,7 +65,7 @@ function Form({login}) {
       newData.username === newLogin.username &&
       newData.password === newLogin.password
     ) {
-      login();
+      login(true);
     } else {
       return toast.error("Incorrect username or password");
     }
