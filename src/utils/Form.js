@@ -1,31 +1,51 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import FormButton from "./FormButton";
 import FormHeader from "./FormHeader";
 import Input from "./Input";
 import Joi from "joi-browser";
+import { toast } from "react-toastify";
 
-class Form extends Component {
-  validateInput = ({ name, value }) => {
+function Form() {
+  const [data, setData] = useState({
+    username: "",
+    password: ""
+  });
+
+  const [errors, setErrors] = useState({
+    username: "",
+    password: ""
+  });
+
+  const schema = {
+    username: Joi.string().required(),
+    password: Joi.string().required()
+  };
+
+  const login = { username: "valentine", password: "pass" };
+
+  const validateInput = ({ name, value }) => {
     const obj = { [name]: value };
-    const schema = { [name]: this.schema[name] };
-    const { error } = Joi.validate(obj, schema);
+    const newSchema = { [name]: schema[name] };
+    const { error } = Joi.validate(obj, newSchema);
 
     return error ? error.details[0].message : null;
   };
 
-  onChange = ({ target: input }) => {
-    const data = { ...this.state.data };
+  const onChange = ({ target: input }) => {
+    const newData = { ...data };
+
     const errors = {};
-    const errorMessage = this.validateInput(input);
+    const errorMessage = validateInput(input);
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
-    data[input.name] = input.value;
-    this.setState({ data, errors });
+    newData[input.name] = input.value;
+    setData(newData);
+    setErrors(errors);
   };
 
-  validateForm = () => {
+  const validateForm = () => {
     const options = { abortEarly: false };
-    const { error } = Joi.validate(this.state.data, this.schema, options);
+    const { error } = Joi.validate(data, schema, options);
     const errors = {};
 
     if (!error) return null;
@@ -37,33 +57,55 @@ class Form extends Component {
     return errors;
   };
 
-  onSubmit = e => {
-    e.preventDefault();
-    const errors = this.validateForm();
-    if (errors) this.setState({ errors });
-    else this.callSubmit();
+  const callSubmit = () => {
+    const newData = { ...data };
+    const newLogin = { ...login };
+    if (
+      newData.username === newLogin.username &&
+      newData.password === newLogin.password
+    ) {
+      console.log("Correct");
+    } else {
+      return toast.error("Incorrect username or password");
+    }
   };
 
-  renderButton = (label, validator = null) => {
+  const onSubmit = e => {
+    e.preventDefault();
+    const errors = validateForm();
+    if (errors) setErrors(errors);
+    else callSubmit();
+  };
+
+  const renderButton = (label, validator = null) => {
     return <FormButton label={label} validator={validator} />;
   };
 
-  renderFormHeader = title => {
+  const renderFormHeader = title => {
     return <FormHeader title={title} />;
   };
 
-  renderInput = (name, type = "text") => {
-    const { data, errors } = this.state;
+  const renderInput = (name, type = "text") => {
     return (
       <Input
         type={type}
         name={name}
         value={data[name]}
-        onChange={this.onChange}
+        onChange={onChange}
         errors={errors[name]}
       />
     );
   };
-}
 
+  return (
+    <form onSubmit={onSubmit}>
+      <div className="form-container">
+        {renderFormHeader("Login")}
+        {renderInput("username")}
+        {renderInput("password", "password")}
+        {renderButton("Login", validateForm())}
+      </div>
+    </form>
+  );
+}
 export default Form;
