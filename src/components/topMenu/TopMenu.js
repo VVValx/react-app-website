@@ -7,14 +7,9 @@ function TopMenu(props) {
   const auth = useContext(AuthContext).auth;
   const AuthCookie = props.cookies.get("auth");
 
-  if (auth) {
-    return <MenuTrue />;
-  } else {
-    if (AuthCookie) {
-      return <MenuTrue />;
-    } else {
-      return <MenuFalse />;
-    }
+  if (auth) return <MenuTrue />;
+  else {
+    return AuthCookie ? <MenuTrue /> : <MenuFalse />;
   }
 }
 
