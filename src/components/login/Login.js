@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Form from "../../utils/Form";
 import AuthContext from "../../contexts/AuthContext";
-function Login() {
-  return (
-    <AuthContext.Consumer>
-      {({ auth, setAuth }) => <Form login={setAuth} view="login" />}
-    </AuthContext.Consumer>
-  );
+function Login(props) {
+  const auth = useContext(AuthContext).auth;
+  const setAuth = useContext(AuthContext).setAuth;
+  return <Form login={setAuth} auth={auth} view="login" {...props} />;
 }
 
 export default Login;

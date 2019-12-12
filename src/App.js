@@ -10,7 +10,6 @@ import NotFound from "./components/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-
 function App(props) {
   const [auth, updateAuth] = useState(false);
 
@@ -19,21 +18,21 @@ function App(props) {
   };
 
   const state = { auth: auth, setAuth: setAuth };
-
   return (
     <div className="App">
-      <TopMenu />
-      <ToastContainer />
-      <Switch>
-        <AuthContext.Provider value={state}>
+      <AuthContext.Provider value={state}>
+        <TopMenu />
+        <ToastContainer />
+        <Switch>
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
           <Route path="/about" exact component={About} />
           <Route path="/" exact component={Home} />
-        </AuthContext.Provider>
-        <Route path="/not-found" component={NotFound} />
-        <Redirect to="/not-found" />
-      </Switch>
+
+          <Route path="/not-found" component={NotFound} />
+          <Redirect to="/not-found" />
+        </Switch>
+      </AuthContext.Provider>
     </div>
   );
 }

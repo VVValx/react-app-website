@@ -4,8 +4,10 @@ import FormHeader from "./FormHeader";
 import Input from "./Input";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 
-function Form({ login, view }) {
+function Form({ login, auth, view, history }) {
+  const [cookies, setCookie] = useCookies(["auth"]);
   const [data, setData] = useState({
     username: "",
     password: ""
@@ -65,6 +67,8 @@ function Form({ login, view }) {
       newData.password === newLogin.password
     ) {
       login(true);
+      setCookie("auth", auth, { path: "/" });
+      history.replace("/");
     } else {
       return toast.error("Incorrect username or password");
     }
@@ -112,11 +116,7 @@ function Form({ login, view }) {
     }
   };
 
-
-  return (
-    renderForm()
-  );
+  return renderForm();
 }
-
 
 export default Form;
