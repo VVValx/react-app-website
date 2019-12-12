@@ -5,12 +5,9 @@ import MenuFalse from "./MenuFalse";
 
 function TopMenu(props) {
   const auth = useContext(AuthContext).auth;
-  const AuthCookie = props.cookies.get("auth");
 
   if (auth) return <MenuTrue />;
-  else {
-    return AuthCookie ? <MenuTrue /> : <MenuFalse />;
-  }
+  else return <MenuFalse />;
 }
 
 export default TopMenu;

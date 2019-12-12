@@ -22,7 +22,7 @@ function App(props) {
   return (
     <div className="App">
       <AuthContext.Provider value={state}>
-        <TopMenu {...props} />
+        <TopMenu />
         <ToastContainer />
         <Switch>
           <Route path="/login" exact component={Login} />
@@ -38,4 +38,4 @@ function App(props) {
   );
 }
 
-export default withCookies(App);
+export default App;
