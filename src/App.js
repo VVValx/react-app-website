@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import AuthContext from "./contexts/AuthContext";
 import Home from "./components/home/Home";
-import TopMenu from "./components/TopMenu";
+import TopMenu from "./components/topMenu/TopMenu";
 import About from "./components/about/About";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
@@ -10,6 +10,7 @@ import NotFound from "./components/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import { withCookies } from "react-cookie";
 function App(props) {
   const [auth, updateAuth] = useState(false);
 
@@ -21,7 +22,7 @@ function App(props) {
   return (
     <div className="App">
       <AuthContext.Provider value={state}>
-        <TopMenu />
+        <TopMenu {...props} />
         <ToastContainer />
         <Switch>
           <Route path="/login" exact component={Login} />
@@ -37,4 +38,4 @@ function App(props) {
   );
 }
 
-export default App;
+export default withCookies(App);

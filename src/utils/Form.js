@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 
 function Form({ login, auth, view, history }) {
-  const [cookies, setCookie] = useCookies(["auth"]);
+  const [setCookie] = useCookies(["auth"]);
   const [data, setData] = useState({
     username: "",
     password: ""
@@ -67,7 +67,7 @@ function Form({ login, auth, view, history }) {
       newData.password === newLogin.password
     ) {
       login(true);
-      setCookie("auth", auth, { path: "/" });
+      setCookie("auth", true, { path: "/" });
       history.replace("/");
     } else {
       return toast.error("Incorrect username or password");

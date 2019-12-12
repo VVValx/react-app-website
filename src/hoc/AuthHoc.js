@@ -1,19 +1,24 @@
 import React, { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
+import { withCookies } from "react-cookie";
 
 function AuthHoc(props) {
   const auth = useContext(AuthContext).auth;
-
+  const authCookie = props.cookies.get("auth");
   const renderValue = () => {
     if (auth) {
-      return <div>{props.children}</div>;
-    } else {
-      props.history.replace("/login");
-      return <p></p>;
+      return <React.Fragment>{props.children}</React.Fragment>;
+    } else if (!auth) {
+      if (authCookie) {
+        return <React.Fragment>{props.children}</React.Fragment>;
+      } else {
+        props.history.replace("/login");
+        return <p></p>;
+      }
     }
   };
 
   return renderValue();
 }
 
-export default AuthHoc;
+export default withCookies(AuthHoc);
